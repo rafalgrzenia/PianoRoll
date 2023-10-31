@@ -1,4 +1,8 @@
-import PianoRoll from './pianoroll.js';
+const pianoRollContainer = document.querySelector(".pianoRollContainer");
+const pianoMainContainer = document.querySelector(".piano-main-container");
+const pianorollMain = document.querySelector(".pianoroll-main");
+const pianorollSide = document.querySelector(".pianoroll-side");
+
 
 class PianoRollDisplay {
   constructor(csvURL) {
