@@ -45,11 +45,9 @@ class PianoRollDisplay {
       }
     });
 
-    // Show PianoMainContainer and Hide pianoRollContainer
+    // Scroll view to the Top of the page
 
-    pianoMainContainer.classList.add("show");
-
-    pianoRollContainer.classList.add("hide");
+    window.scrollTo(0, 0)
 
     // Clone PianoRolls, add them to side container handle event listener that adds clicked element to main view
 
