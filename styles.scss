@@ -33,10 +33,63 @@ body {
   }
 }
 
-#pianoRollContainer {
+
+.pianoRollContainer.hide {
+  display: none;
+}
+
+.active {
+  background-color: lightblue;
+}
+
+
+
+.pianoroll-list {
+  margin-top: 4rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto;
+  place-content: center;
+  gap: 2rem;
+
+  .piano-roll-svg {
+    border: 2px solid #381815;
+  }
+
+  .piano-roll-card {
+    border: 1px solid #ccc;
+    padding: 10px;
+  }
+}
+
+.piano-main-container.show {
+  display: grid;
+}
+
+.piano-main-container {
+  display: none;
+  grid-template-columns: 3fr 1fr;
+  grid-template-rows: auto;
+  place-content: center;
+
+
+  .pianoroll-main {
+    background-color: salmon;
+    grid-column: span 1;
+
+    .piano-roll-svg {
+      height: 20vh;
+    }
+  }
+
+  
+}
+
+.pianoroll-side {
+  background-color: goldenrod;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  gap: 2rem;
 }
 
 h1 {
@@ -69,18 +122,6 @@ button {
 
 button:hover {
   transform: scale(1.05);
-}
-
-.piano-roll-svg {
-  border: 2px solid #381815;
-}
-
-.piano-roll-card {
-  border: 1px solid #ccc;
-  margin-bottom: 10px;
-  padding: 10px;
-  width: 50%;
-  box-sizing: border-box;
 }
 
 .description {
