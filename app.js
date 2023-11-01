@@ -41,6 +41,7 @@ class PianoRollDisplay {
       const id = Number(el.getAttribute("id"));
       if (id === rollId) {
         pianorollMain.append(clone);
+        el.classList.add("active");
       }
     });
 
