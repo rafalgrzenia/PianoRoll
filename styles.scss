@@ -7,7 +7,7 @@
 body {
   font-family: "Mulish", sans-serif;
   cursor: default;
-  background-color: #f0f0f0;
+  background-color: #ececec;
   color: #1c1c1a;
   height: 100vh; /* Use viewport height instead of 100% to occupy full screen height */
   text-align: center;
@@ -15,13 +15,43 @@ body {
   display: flex;
   flex-direction: column;
   position: relative;
+
+  h1 {
+    margin: 2rem 0;
+    font-size: 42px;
+  }
+}
+
+#buttonContainer {
+  button {
+    margin: 2rem 0;
+    padding: 15px 25px;
+    font-size: 18px;
+    color: #f0f0f0;
+    background-color: #944038;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border-radius: 5px;
+  }
+
+  button {
+    /* ... existing button styles ... */
+    border-bottom: 3px solid #381815; /* A darker shade for 3D effect */
+    position: relative; /* Required for the top movement on hover */
+    transition: all 1.1s ease; /* Transition for all properties */
+  }
+
+  button:hover {
+    transform: scale(1.05);
+  }
 }
 
 .navbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #154151;
+  background-color: #181818;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* optional drop shadow */
 
   .logo-container {
@@ -37,48 +67,37 @@ body {
   display: none;
 }
 
-.drag-select {
-  background-color: rgba(20, 137, 189, 0.5);
-}
-.intersected {
-  fill: green;
-  box-sizing: border-box;
-}
-
-// .selection {
-//   background-color: red;
-//   opacity: 0.5;
-//   position: absolute;
-// }
-
-.outline {
-  display: none;
-}
-
-.hide {
-  opacity: 0;
-}
-
-.active {
-  background-color: lightblue;
-}
-
-.pianoroll-list {
-  margin-top: 4rem;
+.pianoRollContainer {
+  margin: 2rem 5rem;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: auto;
-  place-content: center;
   gap: 2rem;
-
-  .piano-roll-svg {
-    border: 2px solid #381815;
-    position: relative;
-  }
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+  justify-items: center;
 
   .piano-roll-card {
+    width: 90%;
     border: 1px solid #ccc;
-    padding: 10px;
+    padding: 3rem 0;
+    border-radius: 10px;
+    transition: 0.3s ease-in-out;
+  }
+
+  .piano-roll-card:hover {
+    cursor: pointer;
+    background-color: rgba(20, 137, 189, 0.3);
+    font-weight: bold;
+  }
+
+  .description {
+    margin-bottom: 2rem;
+    font-size: 1.4rem;
+  }
+
+  .piano-roll-svg {
+    width: 70%;
+    height: 150px;
+    border: 2px solid #381815;
   }
 }
 
@@ -87,51 +106,74 @@ body {
 }
 
 .piano-main-container {
+  margin: 2rem;
   display: none;
   grid-template-columns: 3fr 1fr;
-  grid-template-rows: auto;
-  place-content: center;
+  align-content: space-around;
+  gap: 3rem;
 
   .pianoroll-main {
-    background-color: salmon;
-    grid-column: span 1;
+    .piano-roll-svg {
+      height: 200px;
+      width: 80%;
+    }
+
+    .piano-roll-card {
+      border: 1px solid #ccc;
+      padding-bottom: 2rem;
+      border-radius: 10px;
+    }
+
+    .piano-roll-svg {
+      height: 350px;
+      width: 90%;
+      border: 3px solid black;
+    }
+
+    .description {
+      font-size: 1.4rem;
+      margin: 1.25rem 0;
+      font-weight: 500;
+    }
+  }
+
+  .pianoroll-side {
+    overflow-y: scroll;
+    height: 550px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+
+    .piano-roll-card {
+      width: 80%;
+      border: 1px solid #ccc;
+      padding: 3rem 0;
+      transition: 0.3s ease-in-out;
+      border-radius: 10px;
+    }
+
+    .piano-roll-svg {
+      width: 90%;
+      height: 150px;
+      border: 2px solid #381815;
+    }
+
+    .description {
+      margin-bottom: 2rem;
+      font-size: 1.4rem;
+    }
   }
 }
 
-.pianoroll-side {
-  background-color: goldenrod;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
+.drag-select {
+  background-color: rgba(20, 137, 189, 0.5);
+}
+.intersected {
+  fill: green;
+  box-sizing: border-box;
 }
 
-h1 {
-  margin-bottom: 20px;
-  font-size: 42px;
-}
-
-button {
-  padding: 15px 25px;
-  font-size: 18px;
-  color: #f0f0f0;
-  background-color: #944038;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  border-radius: 5px;
-}
-
-button {
-  /* ... existing button styles ... */
-  border-bottom: 3px solid #381815; /* A darker shade for 3D effect */
-  position: relative; /* Required for the top movement on hover */
-  transition: all 1.1s ease; /* Transition for all properties */
-}
-
-button:hover {
-  transform: scale(1.05);
-}
-
-.description {
-  margin-top: 10px;
+.active {
+  background-color: lightblue;
 }
