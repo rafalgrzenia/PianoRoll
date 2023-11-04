@@ -33,16 +33,35 @@ body {
   }
 }
 
-
 .pianoRollContainer.hide {
   display: none;
+}
+
+.drag-select {
+  background-color: rgba(20, 137, 189, 0.5);
+}
+.intersected {
+  fill: green;
+  box-sizing: border-box;
+}
+
+// .selection {
+//   background-color: red;
+//   opacity: 0.5;
+//   position: absolute;
+// }
+
+.outline {
+  display: none;
+}
+
+.hide {
+  opacity: 0;
 }
 
 .active {
   background-color: lightblue;
 }
-
-
 
 .pianoroll-list {
   margin-top: 4rem;
@@ -72,17 +91,10 @@ body {
   grid-template-rows: auto;
   place-content: center;
 
-
   .pianoroll-main {
     background-color: salmon;
     grid-column: span 1;
-
-    .piano-roll-svg {
-      height: 20vh;
-    }
   }
-
-  
 }
 
 .pianoroll-side {
@@ -118,6 +130,12 @@ button {
 #buttonContainer {
   display: flex;
   justify-content: center;
+}
+
+#exitbuttonContainer {
+  display: none;
+  justify-content: end;
+  margin: 2rem;
 }
 
 button:hover {
