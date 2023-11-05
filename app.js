@@ -283,6 +283,17 @@ class PianoRollDisplay {
     this.selectionStartPosition = null;
   }
 
+  // Reset Notes Colors
+
+  resetNotesColors() {
+    const svg = pianorollMain.querySelector("svg");
+    const notes = Array.from(svg.children).filter((e) =>
+      e.classList.contains("selected")
+    );
+    notes.forEach((note, index) => {
+      note.setAttribute("fill", this.previousNotesColors[index]);
+    });
+    this.previousNotesColors = [];
   }
 }
 
