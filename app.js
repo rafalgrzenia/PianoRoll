@@ -250,6 +250,26 @@ class PianoRollDisplay {
     });
   }
 
+  // Method that checks if selected area and note are interesecting
+  checkIfInSelection(
+    x,
+    y,
+    height,
+    width,
+    selectionX,
+    selectionY,
+    selectionHeight,
+    selectionWidth
+  ) {
+    if (
+      x < selectionWidth &&
+      width > selectionX &&
+      y < selectionHeight &&
+      height > selectionY
+    ) {
+      return true;
+    }
+  }
   }
 }
 
