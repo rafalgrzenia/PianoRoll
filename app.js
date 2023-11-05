@@ -124,29 +124,18 @@ class PianoRollDisplay {
     svg.addEventListener("mousemove", (e) => this.drawSelection(e, svg));
 
     svg.addEventListener("mouseup", (e) => this.endSelection(e, svg));
+  getMousePosition(event, svg) {
+    let { clientX, clientY } = event;
 
+    // Return position of the mouse fired on svg element
 
-    // Append the SVG to the card container
-    cardDiv.appendChild(svg);
+    const svgPosition = svg.getBoundingClientRect();
 
-    return { cardDiv, svg };
+    const x = Math.max(clientX - svgPosition.left, 0);
+    const y = Math.max(clientY - svgPosition.top, 0);
+
+    return { x, y };
   }
-
-  async generateSVGs() {
-    if (!this.data) await this.loadPianoRollData();
-    if (!this.data) return;
-
-    pianoRollContainer.innerHTML = "";
-    for (let it = 0; it < 20; it++) {
-      const start = it * 60;
-      const end = start + 60;
-      const partData = this.data.slice(start, end);
-
-      const { cardDiv, svg } = this.preparePianoRollCard(it);
-
-      pianoRollContainer.appendChild(cardDiv);
-      const roll = new PianoRoll(svg, partData);
-    }
   }
 }
 
