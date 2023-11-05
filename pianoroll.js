@@ -71,10 +71,13 @@ export default class PianoRoll {
     this.note_height = 1 / pitch_span;
     this.drawEmptyPianoRoll(pitch_min, pitch_max);
 
-    // Add test id
+    // Add id
 
+    let num = 0;
 
     sequence.forEach((note) => {
+      // Add id
+      num++;
       const note_rectangle = document.createElementNS(
         "http://www.w3.org/2000/svg",
         "rect"
@@ -99,7 +102,7 @@ export default class PianoRoll {
 
       note_rectangle.classList.add("note-rectangle");
 
-      // Add note ID
+      // Add note id
 
       note_rectangle.setAttribute("id", `${num}`);
 
