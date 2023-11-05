@@ -8,6 +8,13 @@ class PianoRollDisplay {
   constructor(csvURL) {
     this.csvURL = csvURL;
     this.data = null;
+    this.isSelecting = false;
+    this.selectionEnd = false;
+    this.selectionStartPosition = null;
+    this.selectionEndPosition = null;
+    this.previousNotesColors = [];
+    this.isTouch = false;
+    this.noteCount = [];
   }
 
   async loadPianoRollData() {
