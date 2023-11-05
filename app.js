@@ -124,6 +124,8 @@ class PianoRollDisplay {
     svg.addEventListener("mousemove", (e) => this.drawSelection(e, svg));
 
     svg.addEventListener("mouseup", (e) => this.endSelection(e, svg));
+  }
+
   getMousePosition(event, svg) {
     let { clientX, clientY } = event;
 
