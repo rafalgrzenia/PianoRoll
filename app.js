@@ -156,6 +156,28 @@ class PianoRollDisplay {
     this.selectionStartPosition = clickedPosition;
   }
 
+  // Method that ends selection.
+  endSelection(event, svg) {
+    if (!this.isSelecting) return;
+    this.isSelecting = false;
+    this.selectionEnd = true;
+    const clickedPosition = this.getMousePosition(event, svg);
+    this.selectionEndPosition = clickedPosition;
+
+    // Console Log selection positions
+
+    console.log(`Start Position: x: ${this.selectionStartPosition.x}`);
+    console.log(`Start Position: y: ${this.selectionStartPosition.y}`);
+    console.log(`End Position: x: ${this.selectionEndPosition.x}`);
+    console.log(`End Position: y: ${this.selectionEndPosition.y}`);
+
+    // Check if notes in noteCount array, if so display it's count
+
+    this.noteCount.length > 0
+      ? console.log(`Selected Notes: ${this.noteCount.length}`)
+      : console.log(`Selected Notes: 0`);
+  }
+
   }
 }
 
