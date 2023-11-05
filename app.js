@@ -1,9 +1,8 @@
 import PianoRoll from "./pianoroll.js";
 
 const pianoRollContainer = document.querySelector(".pianoRollContainer");
-const pianoMainContainer = document.querySelector(".piano-main-container");
 const pianorollMain = document.querySelector(".pianoroll-main");
-const pianorollSide = document.querySelector(".pianoroll-side");
+const pianorollList = document.querySelector(".pianoroll-list");
 
 class PianoRollDisplay {
   constructor(csvURL) {
@@ -24,46 +23,46 @@ class PianoRollDisplay {
   }
 
   openPianoRoll(rollId) {
-    // Select all piano roll cards from roll pianoRollContainer
+    // Select all piano roll cards from pianorollList
 
-    const pianoRolls = Array.from(
-      pianoRollContainer.querySelectorAll(".piano-roll-card")
+    const pianoRollCards = Array.from(
+      pianorollList.querySelectorAll(".piano-roll-card")
     );
 
-    // Find clicked element and append it to Main Container
+    // Clear Piano Roll Main View
 
-    pianoRolls.find((el) => {
-      const clone = el.cloneNode(true);
-      const id = Number(el.getAttribute("id"));
+    pianorollMain.innerHTML = "";
+
+    // Reset active class of piano rolls
+
+    pianoRollCards.forEach((rolls) => rolls.classList.remove("active"));
+
+    // Change PianoRoll list to one column view
+
+    pianorollList.classList.add("column");
+
+    // Find clicked element clone it and append it to Main Container and add active class to it
+
+    pianoRollCards.find((card) => {
+      const id = Number(card.getAttribute("id"));
       if (id === rollId) {
+        const clone = card.cloneNode(true);
         pianorollMain.append(clone);
-        el.classList.add("active");
+        card.classList.add("active");
+        console.log(
+          "🚀 ~ file: app.js:53 ~ PianoRollDisplay ~ pianoRollCards.find ~ card:",
+          card
+        );
       }
     });
 
-    // Scroll view to the Top of the page
+    // Display PianorollMain
 
-    window.scrollTo(0, 0);
+    pianorollMain.classList.remove("hide");
 
-    // Clone PianoRolls, add them to side container handle event listener that adds clicked element to main view
+    // Set PianoRollContainer display to grid
 
-    const clonedPianoRolls = [...pianoRolls];
-
-    clonedPianoRolls.forEach((pianoroll) => {
-      pianoroll.addEventListener("click", () => {
-        pianorollMain.innerHTML = "";
-        clonedPianoRolls.forEach((roll) => roll.classList.remove("active"));
-        const cloneNode = pianoroll.cloneNode(true);
-        pianorollMain.append(cloneNode);
-        pianoroll.classList.add("active");
-        this.selection();
-      });
-      pianorollSide.append(pianoroll);
-    });
-
-    // Show PianoMainContainer and Hide pianoRollContainer
-
-    pianoMainContainer.classList.add("show");
+    pianoRollContainer.style.display = "grid";
 
     pianoRollContainer.classList.add("hide");
 
