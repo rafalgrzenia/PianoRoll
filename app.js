@@ -22,6 +22,50 @@ class PianoRollDisplay {
     }
   }
 
+  async generateSVGs() {
+    if (!this.data) await this.loadPianoRollData();
+    if (!this.data) return;
+
+    pianorollList.innerHTML = "";
+    for (let it = 0; it < 20; it++) {
+      const start = it * 60;
+      const end = start + 60;
+      const partData = this.data.slice(start, end);
+
+      const { cardDiv, svg } = this.preparePianoRollCard(it);
+
+      pianorollList.appendChild(cardDiv);
+      const roll = new PianoRoll(svg, partData);
+    }
+  }
+
+  preparePianoRollCard(rollId) {
+    const cardDiv = document.createElement("div");
+    cardDiv.classList.add("piano-roll-card");
+
+    // Set Id to cardDiv
+
+    cardDiv.setAttribute("id", `${rollId}`);
+
+    // Create and append other elements to the card container as needed
+    const descriptionDiv = document.createElement("div");
+    descriptionDiv.classList.add("description");
+    descriptionDiv.textContent = `Piano Roll Number: ${rollId}`;
+    cardDiv.addEventListener("click", () => {
+      this.openPianoRoll(rollId);
+    });
+
+    cardDiv.appendChild(descriptionDiv);
+
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.classList.add("piano-roll-svg");
+
+    // Append the SVG to the card container
+    cardDiv.appendChild(svg);
+
+    return { cardDiv, svg };
+  }
+
   openPianoRoll(rollId) {
     // Select all piano roll cards from pianorollList
 
@@ -33,7 +77,7 @@ class PianoRollDisplay {
 
     pianorollMain.innerHTML = "";
 
-    // Reset active class of piano rolls
+    // Remove active class from pianoRolls
 
     pianoRollCards.forEach((rolls) => rolls.classList.remove("active"));
 
@@ -49,10 +93,6 @@ class PianoRollDisplay {
         const clone = card.cloneNode(true);
         pianorollMain.append(clone);
         card.classList.add("active");
-        console.log(
-          "🚀 ~ file: app.js:53 ~ PianoRollDisplay ~ pianoRollCards.find ~ card:",
-          card
-        );
       }
     });
 
@@ -64,78 +104,20 @@ class PianoRollDisplay {
 
     pianoRollContainer.style.display = "grid";
 
-    pianoRollContainer.classList.add("hide");
+    // Select Svg element from pianoRollMain
 
-    // ----------------------------------------------------------
-  }
+    const svg = pianorollMain.querySelector("svg");
 
-  // Select content in .piano-roll-card's main container with selection div
+    // Selection events
 
-  selection() {
-    var svg = pianorollMain.querySelector(".piano-roll-card"),
-      x1 = 0,
-      y1 = 0,
-      x2 = 0,
-      y2 = 0;
-
-    const selection = document.createElement("div");
-    selection.classList.add("selection");
-    selection.hidden = 1;
-    svg.append(selection);
-
-    console.log(svg);
-    console.log(selection);
-
-    function reCalc() {
-      //This will restyle the div
-      var x3 = Math.min(x1, x2);
-      var x4 = Math.max(x1, x2);
-      var y3 = Math.min(y1, y2);
-      var y4 = Math.max(y1, y2);
-      selection.style.left = x3 + "px";
-      selection.style.top = y3 + "px";
-      selection.style.width = x4 - x3 + "px";
-      selection.style.height = y4 - y3 + "px";
-    }
-
-    svg.onmousedown = function (e) {
-      selection.hidden = 0;
-      x1 = e.clientX;
-      y1 = e.clientY;
-      reCalc();
-    };
-    svg.onmousemove = function (e) {
-      x2 = e.clientX;
-      y2 = e.clientY;
-      reCalc();
-    };
-    svg.onmouseup = function (e) {
-      selection.hidden = 1;
-
-      console.log(`Starting x:${x1}, Starting y: ${y1}`);
-      console.log(`Ending x:${x2}, Ending y: ${y2}`);
-    };
-  }
-
-  preparePianoRollCard(rollId) {
-    const cardDiv = document.createElement("div");
-    cardDiv.classList.add("piano-roll-card");
-    cardDiv.setAttribute("id", `${rollId}`);
-
-    // Create and append other elements to the card container as needed
-    const descriptionDiv = document.createElement("div");
-    descriptionDiv.classList.add("description");
-    descriptionDiv.textContent = `This is a piano roll number ${rollId}`;
-    cardDiv.appendChild(descriptionDiv);
-    cardDiv.addEventListener("click", () => {
-      this.openPianoRoll(rollId);
-      this.selection();
+    svg.addEventListener("mousedown", (e) => {
+      this.startSelection(e, svg);
     });
 
-    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    svg.classList.add("piano-roll-svg");
-    svg.setAttribute("width", "80%");
-    svg.setAttribute("height", "150");
+    svg.addEventListener("mousemove", (e) => this.drawSelection(e, svg));
+
+    svg.addEventListener("mouseup", (e) => this.endSelection(e, svg));
+
 
     // Append the SVG to the card container
     cardDiv.appendChild(svg);
