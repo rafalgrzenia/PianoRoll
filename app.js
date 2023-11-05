@@ -178,6 +178,78 @@ class PianoRollDisplay {
       : console.log(`Selected Notes: 0`);
   }
 
+  drawSelection(event, svg) {
+    if (!this.isSelecting) return;
+    let selection = document.getElementById("selection");
+    // Create selection element if it doesn't exist yet.
+    if (!selection) {
+      selection = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "rect"
+      );
+      selection.id = "selection";
+      svg.appendChild(selection);
+    }
+    const svgPos = svg.getBoundingClientRect();
+
+    // Calculate new selection area based on starting position from startSelection function and current cursor position
+    const currentPosition = this.getMousePosition(event, svg);
+    const minY = Math.min(this.selectionStartPosition.y, currentPosition.y);
+    const minX = Math.min(this.selectionStartPosition.x, currentPosition.x);
+    const maxY = Math.max(this.selectionStartPosition.y, currentPosition.y);
+    const maxX = Math.max(this.selectionStartPosition.x, currentPosition.x);
+    const selectionY = minY / svgPos.height;
+    const selectionX = minX / svgPos.width;
+    const selectionHeight = (maxY - minY) / svgPos.height;
+    const selectionWidth = (maxX - minX) / svgPos.width;
+
+    // Set selection attributes
+    selection.setAttribute("fill", "rgba(255, 59, 59, 0.31)");
+    selection.setAttribute("x", selectionX);
+    selection.setAttribute("y", selectionY);
+    selection.setAttribute("height", selectionHeight);
+    selection.setAttribute("width", selectionWidth);
+
+    // Restore previous colors to notes
+    this.resetNotesColors();
+
+    // Recolor notes that are within selected area
+    const notes = Array.from(svg.children).filter((e) =>
+      e.classList.contains("note-rectangle")
+    );
+
+    notes.forEach((note) => {
+      const x = note.x.baseVal.value;
+      const y = note.y.baseVal.value;
+      const height = note.height.baseVal.value;
+      const width = note.width.baseVal.value;
+      if (
+        this.checkIfInSelection(
+          x,
+          y,
+          y + height,
+          x + width,
+          selectionX,
+          selectionY,
+          selectionY + selectionHeight,
+          selectionX + selectionWidth
+        )
+      ) {
+
+
+        // Keep track of colors of selected notes so we can reset them to original colors later.
+        this.previousNotesColors.push(note.getAttribute("fill"));
+        note.classList.add("selected");
+        note.setAttribute("fill", "green");
+
+        // Query selected notes and add them to noteCount
+
+        const selectedNotes = svg.querySelectorAll('[fill*="green"]');
+        this.noteCount = selectedNotes;
+      }
+    });
+  }
+
   }
 }
 
