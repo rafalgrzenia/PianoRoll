@@ -270,6 +270,19 @@ class PianoRollDisplay {
       return true;
     }
   }
+
+  // Reset selection area
+
+  resetSelection() {
+    this.selectionEnd = false;
+    this.isSelecting = false;
+    this.resetNotesColors();
+    const selection = document.getElementById("selection");
+    if (selection) selection.remove();
+    this.selectionEndPosition = null;
+    this.selectionStartPosition = null;
+  }
+
   }
 }
 
