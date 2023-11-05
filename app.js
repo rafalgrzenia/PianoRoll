@@ -13,7 +13,6 @@ class PianoRollDisplay {
     this.selectionStartPosition = null;
     this.selectionEndPosition = null;
     this.previousNotesColors = [];
-    this.isTouch = false;
     this.noteCount = [];
   }
 
@@ -109,7 +108,7 @@ class PianoRollDisplay {
 
     // Set PianoRollContainer display to grid
 
-    pianoRollContainer.style.display = "grid";
+    pianoRollContainer.classList.add("grid");
 
     // Select Svg element from pianoRollMain
 
@@ -138,6 +137,25 @@ class PianoRollDisplay {
 
     return { x, y };
   }
+  // Method that starts selection
+
+  startSelection(event, svg) {
+    // Reset noteCount
+
+    this.noteCount = [];
+
+    // Reset selection area if previous selection is done
+    if (this.selectionEnd) {
+      this.resetSelection();
+    }
+    if (this.isSelecting) return;
+    this.isSelecting = true;
+
+    // Get starting click position
+    const clickedPosition = this.getMousePosition(event, svg);
+    this.selectionStartPosition = clickedPosition;
+  }
+
   }
 }
 
