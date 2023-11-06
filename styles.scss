@@ -78,6 +78,7 @@ body {
     }
 
     .piano-roll-card:hover {
+      cursor: pointer;
       background-color: rgba(0, 135, 255, 0.3);
     }
 
@@ -95,7 +96,9 @@ body {
   }
 
   .description {
-    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
   }
 }
 
@@ -104,7 +107,7 @@ h1 {
   font-size: 2.5rem;
 }
 
-button {
+#loadCSV {
   padding: 15px 25px;
   font-size: 18px;
   color: #f0f0f0;
@@ -115,7 +118,7 @@ button {
   border-radius: 5px;
 }
 
-button {
+#loadCSV {
   /* ... existing button styles ... */
   border-bottom: 3px solid #381815; /* A darker shade for 3D effect */
   position: relative; /* Required for the top movement on hover */
@@ -128,8 +131,31 @@ button {
   justify-content: center;
 }
 
-button:hover {
+#loadCSV:hover {
   transform: scale(1.05);
+}
+
+.exitButtonContainer {
+  margin-left: auto;
+
+  .exitButton {
+    cursor: pointer;
+    margin-right: 4rem;
+    color: black;
+    font-size: 2em;
+    transition: 0.2s ease-in-out;
+    padding: 10px 20px;
+    font-size: 2em;
+    border: none;
+  }
+
+  .exitButton:hover {
+    color: rgb(219, 0, 0);
+  }
+}
+
+.exitButton.hide {
+  display: none;
 }
 
 @media (max-width: 1300px) {
@@ -147,6 +173,7 @@ button:hover {
       flex-direction: column;
 
       .piano-roll-card {
+        max-width: 70%;
         padding: 1rem;
       }
 
@@ -165,7 +192,6 @@ button:hover {
     }
 
     .pianoroll-list.column {
-      height: auto;
       display: flex;
       flex-direction: column;
       overflow-x: hidden;
@@ -195,7 +221,7 @@ button:hover {
     }
     .pianoroll-list {
       .piano-roll-card {
-        width: 60%;
+        width: 50%;
       }
     }
   }

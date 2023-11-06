@@ -56,7 +56,7 @@ class PianoRollDisplay {
     // Create and append other elements to the card container as needed
     const descriptionDiv = document.createElement("div");
     descriptionDiv.classList.add("description");
-    descriptionDiv.textContent = `Piano Roll Number: ${rollId}`;
+    descriptionDiv.textContent = `Piano Roll: ${rollId}`;
     cardDiv.addEventListener("click", () => {
       this.openPianoRoll(rollId);
       this.resetSelection();
@@ -81,6 +81,7 @@ class PianoRollDisplay {
     const pianoRollCards = Array.from(
       pianorollList.querySelectorAll(".piano-roll-card")
     );
+
     exitButton.classList.remove("hide");
 
     // Clear Piano Roll Main View
@@ -106,8 +107,13 @@ class PianoRollDisplay {
         cloneSvg.setAttribute("height", 500);
         pianorollMain.append(clone);
         card.classList.add("active");
+        card.scrollIntoView();
       }
     });
+
+    // Scroll window to the top
+
+    window.scroll(0, 0);
 
     // Display PianorollMain
 
@@ -120,11 +126,6 @@ class PianoRollDisplay {
     // Select Svg element from pianoRollMain
 
     const svg = pianorollMain.querySelector("svg");
-    console.log(
-      "🚀 ~ file: app.js:121 ~ PianoRollDisplay ~ openPianoRoll ~ svg:",
-      svg
-    );
-
     // Selection events
 
     svg.addEventListener("mousedown", (e) => {
@@ -226,7 +227,7 @@ class PianoRollDisplay {
     const selectionWidth = (maxX - minX) / svgPos.width;
 
     // Set selection attributes
-    selection.setAttribute("fill", "rgba(0, 0, 34, 0.3)");
+    selection.setAttribute("fill", "rgba(4, 4, 4, 0.4)");
     selection.setAttribute("x", selectionX);
     selection.setAttribute("y", selectionY);
     selection.setAttribute("height", selectionHeight);
