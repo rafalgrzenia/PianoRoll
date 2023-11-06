@@ -137,14 +137,20 @@ class PianoRollDisplay {
 
     svg.addEventListener("mouseup", (e) => this.endSelection(e, svg));
 
-    exitButton.addEventListener("click", () => {
+    // Exit button function that handles exit to List view on click
+
+    function handleExit() {
       pianoRollCards.forEach((rolls) => rolls.classList.remove("active"));
       pianorollMain.classList.add("hide");
       pianorollMain.innerHTML = "";
       pianoRollContainer.classList.remove("grid");
       pianorollList.classList.remove("column");
       exitButton.classList.add("hide");
-    });
+    }
+
+    // Exit button event handler
+
+    exitButton.addEventListener("click", handleExit);
   }
 
   getMousePosition(event, svg) {
