@@ -3,6 +3,7 @@ import PianoRoll from "./pianoroll.js";
 const pianoRollContainer = document.querySelector(".pianoRollContainer");
 const pianorollMain = document.querySelector(".pianoroll-main");
 const pianorollList = document.querySelector(".pianoroll-list");
+const exitButton = document.querySelector(".exitButton");
 
 class PianoRollDisplay {
   constructor(csvURL) {
@@ -80,6 +81,7 @@ class PianoRollDisplay {
     const pianoRollCards = Array.from(
       pianorollList.querySelectorAll(".piano-roll-card")
     );
+    exitButton.classList.remove("hide");
 
     // Clear Piano Roll Main View
 
@@ -133,6 +135,15 @@ class PianoRollDisplay {
     svg.addEventListener("mousemove", (e) => this.drawSelection(e, svg));
 
     svg.addEventListener("mouseup", (e) => this.endSelection(e, svg));
+
+    exitButton.addEventListener("click", () => {
+      pianoRollCards.forEach((rolls) => rolls.classList.remove("active"));
+      pianorollMain.classList.add("hide");
+      pianorollMain.innerHTML = "";
+      pianoRollContainer.classList.remove("grid");
+      pianorollList.classList.remove("column");
+      exitButton.classList.add("hide");
+    });
   }
 
   getMousePosition(event, svg) {
