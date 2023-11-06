@@ -1,20 +1,18 @@
 {
-  "name": "pianoroll",
+  "name": "pianroll",
   "private": true,
+  "homepage": "https://rafalgrzenia.github.io/PianoRoll/",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview",
-    "predeploy" : "npm run build",
-    "deploy" : "gh-pages -d dist"
+    "preview": "vite preview"
   },
   "devDependencies": {
-    "gh-pages": "^6.0.0",
     "sass": "^1.69.5",
     "vite": "^4.4.5"
-  },
+  }
 
-  "homepage": "https://rafalgrzenia.github.io/PianoRoll/"
+  
 }
