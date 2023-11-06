@@ -12,7 +12,6 @@ class PianoRollDisplay {
     this.selectionEnd = false;
     this.selectionStartPosition = null;
     this.selectionEndPosition = null;
-    this.previousNotesColors = [];
     this.noteCount = [];
   }
 
@@ -59,11 +58,14 @@ class PianoRollDisplay {
     descriptionDiv.textContent = `Piano Roll Number: ${rollId}`;
     cardDiv.addEventListener("click", () => {
       this.openPianoRoll(rollId);
+      this.resetSelection();
     });
 
     cardDiv.appendChild(descriptionDiv);
 
     const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("width", "80%");
+    svg.setAttribute("height", "150");
     svg.classList.add("piano-roll-svg");
 
     // Append the SVG to the card container
@@ -97,6 +99,9 @@ class PianoRollDisplay {
       const id = Number(card.getAttribute("id"));
       if (id === rollId) {
         const clone = card.cloneNode(true);
+        const cloneSvg = clone.querySelector("svg");
+        cloneSvg.setAttribute("draggable", true);
+        cloneSvg.setAttribute("height", 500);
         pianorollMain.append(clone);
         card.classList.add("active");
       }
@@ -113,10 +118,15 @@ class PianoRollDisplay {
     // Select Svg element from pianoRollMain
 
     const svg = pianorollMain.querySelector("svg");
+    console.log(
+      "🚀 ~ file: app.js:121 ~ PianoRollDisplay ~ openPianoRoll ~ svg:",
+      svg
+    );
 
     // Selection events
 
     svg.addEventListener("mousedown", (e) => {
+      e.preventDefault();
       this.startSelection(e, svg);
     });
 
@@ -164,7 +174,7 @@ class PianoRollDisplay {
     const clickedPosition = this.getMousePosition(event, svg);
     this.selectionEndPosition = clickedPosition;
 
-    // Console Log selection positions
+    // Console Log selection position
 
     console.log(`Start Position: x: ${this.selectionStartPosition.x}`);
     console.log(`Start Position: y: ${this.selectionStartPosition.y}`);
@@ -181,6 +191,7 @@ class PianoRollDisplay {
   drawSelection(event, svg) {
     if (!this.isSelecting) return;
     let selection = document.getElementById("selection");
+
     // Create selection element if it doesn't exist yet.
     if (!selection) {
       selection = document.createElementNS(
@@ -204,14 +215,15 @@ class PianoRollDisplay {
     const selectionWidth = (maxX - minX) / svgPos.width;
 
     // Set selection attributes
-    selection.setAttribute("fill", "rgba(255, 59, 59, 0.31)");
+    selection.setAttribute("fill", "rgba(0, 0, 34, 0.3)");
     selection.setAttribute("x", selectionX);
     selection.setAttribute("y", selectionY);
     selection.setAttribute("height", selectionHeight);
     selection.setAttribute("width", selectionWidth);
 
-    // Restore previous colors to notes
-    this.resetNotesColors();
+    // Reset notes colors to default
+
+    this.resetNotesToDefaultColor();
 
     // Recolor notes that are within selected area
     const notes = Array.from(svg.children).filter((e) =>
@@ -235,16 +247,14 @@ class PianoRollDisplay {
           selectionX + selectionWidth
         )
       ) {
+        // Recolor selected notes
 
-
-        // Keep track of colors of selected notes so we can reset them to original colors later.
-        this.previousNotesColors.push(note.getAttribute("fill"));
         note.classList.add("selected");
-        note.setAttribute("fill", "green");
+        note.setAttribute("fill", "rgb(226,132,19)");
 
         // Query selected notes and add them to noteCount
 
-        const selectedNotes = svg.querySelectorAll('[fill*="green"]');
+        const selectedNotes = svg.querySelectorAll('[fill*="rgb(226,132,19)"]');
         this.noteCount = selectedNotes;
       }
     });
@@ -276,7 +286,7 @@ class PianoRollDisplay {
   resetSelection() {
     this.selectionEnd = false;
     this.isSelecting = false;
-    this.resetNotesColors();
+    this.resetNotesToDefaultColor();
     const selection = document.getElementById("selection");
     if (selection) selection.remove();
     this.selectionEndPosition = null;
@@ -285,15 +295,12 @@ class PianoRollDisplay {
 
   // Reset Notes Colors
 
-  resetNotesColors() {
-    const svg = pianorollMain.querySelector("svg");
-    const notes = Array.from(svg.children).filter((e) =>
-      e.classList.contains("selected")
-    );
-    notes.forEach((note, index) => {
-      note.setAttribute("fill", this.previousNotesColors[index]);
+  resetNotesToDefaultColor() {
+    const notes = Array.from(pianorollMain.querySelectorAll(".note-rectangle"));
+    notes.filter((e) => e.classList.contains("selected"));
+    notes.forEach((note) => {
+      note.setAttribute("fill", "rgb(46, 46, 43)");
     });
-    this.previousNotesColors = [];
   }
 }
 
