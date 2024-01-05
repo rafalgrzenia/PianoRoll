@@ -2,9 +2,9 @@
 
 ## Introduction
 
-Hi! Thank you for giving me an opportunity to participate in this challange. I learned a lot!
+Hi! Thank you for allowing me to participate in this challenge. I learned a lot and it was a fun experience!
 
-Down below you can find all neccesary information to check my project!
+Down below you can find all the necessary information to check my project!
 
 Hope to see you soon :)
 
@@ -27,7 +27,7 @@ https://github.com/rafalgrzenia/PianoRoll/assets/23459558/fdf1410a-3b6b-4707-813
 
 ## Requirements
 
-[Challange Github](https://github.com/Nospoko/pianoroll-frontend-challenge)
+[Challenge Github](https://github.com/Nospoko/pianoroll-frontend-challenge)
 
 
 
